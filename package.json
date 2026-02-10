@@ -1,0 +1,19 @@
+{
+  "name": "vpnspan",
+  "version": "1.0.0",
+  "description": "VPNSpan - Real-time VPN Performance Monitor",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm run preview"
+  },
+  "keywords": ["vpn", "monitor", "performance", "tracking"],
+  "author": "VPNSpan Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
