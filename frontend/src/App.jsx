@@ -3,6 +3,8 @@ import Header from './components/Header'
 import Dashboard from './pages/Dashboard'
 import VPNDetail from './pages/VPNDetail'
 import About from './pages/About'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 
 function App() {
     return (
@@ -14,6 +16,8 @@ function App() {
                         <Route path="/" element={<Dashboard />} />
                         <Route path="/vpn/:id" element={<VPNDetail />} />
                         <Route path="/about" element={<About />} />
+                        <Route path="/privacy" element={<Privacy />} />
+                        <Route path="/terms" element={<Terms />} />
                     </Routes>
                 </main>
                 <footer style={{
@@ -26,6 +30,13 @@ function App() {
                     <p>VPNSpan © 2026 - Real-time VPN Performance Monitoring</p>
                     <p style={{ marginTop: '0.5rem' }}>
                         Monitoring data updates every 30 minutes
+                    </p>
+                    <p style={{ marginTop: '1rem', display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
+                        <a href="/privacy" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Privacy Policy</a>
+                        <span>|</span>
+                        <a href="/terms" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Terms of Service</a>
+                        <span>|</span>
+                        <a href="mailto:contact@vpnspan.com" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Contact</a>
                     </p>
                 </footer>
             </div>
