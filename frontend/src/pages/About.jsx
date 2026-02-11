@@ -4,7 +4,7 @@ export default function About() {
     return (
         <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '3rem 2rem' }}>
             <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', textAlign: 'center' }}>
-                关于 VPN<span style={{ color: 'var(--accent-primary)' }}>Span</span>
+                About VPN<span style={{ color: 'var(--accent-primary)' }}>Span</span>
             </h1>
             <p style={{
                 fontSize: '1.1rem',
@@ -14,10 +14,10 @@ export default function About() {
                 maxWidth: '700px',
                 margin: '0 auto 3rem'
             }}>
-                实时监控全球VPN服务性能，帮助您做出明智的选择
+                Real-time monitoring of global VPN service performance to help you make informed decisions
             </p>
 
-            {/* 特点卡片 */}
+            {/* Feature Cards */}
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
@@ -26,27 +26,27 @@ export default function About() {
             }}>
                 <FeatureCard
                     icon={<BarChart3 size={32} />}
-                    title="实时监控"
-                    description="每30分钟自动测试所有VPN服务，提供最新的性能数据"
+                    title="Real-time Monitoring"
+                    description="Automatically test all VPN services every 30 minutes, providing the latest performance data"
                 />
                 <FeatureCard
                     icon={<Target size={32} />}
-                    title="客观中立"
-                    description="基于真实测试数据，不受任何VPN厂商影响，保持独立性"
+                    title="Objective & Unbiased"
+                    description="Based on real test data, independent from any VPN vendor influence"
                 />
                 <FeatureCard
                     icon={<Shield size={32} />}
-                    title="全面评估"
-                    description="监控速度、延迟、稳定性、流媒体解锁等多个维度"
+                    title="Comprehensive  Assessment"
+                    description="Monitor multiple dimensions including speed, latency, stability, and streaming unblocking"
                 />
                 <FeatureCard
                     icon={<Zap size={32} />}
-                    title="历史趋势"
-                    description="提供24小时性能曲线，帮助识别服务质量波动"
+                    title="Historical Trends"
+                    description="Provide 24-hour performance curves to help identify service quality fluctuations"
                 />
             </div>
 
-            {/* 测试方法论 */}
+            {/* Testing Methodology */}
             <section style={{
                 background: 'var(--bg-secondary)',
                 padding: '2rem',
@@ -54,30 +54,56 @@ export default function About() {
                 marginBottom: '2rem',
                 border: '1px solid var(--border-color)'
             }}>
-                <h2 style={{ fontSize: '1.75rem', marginBottom: '1.5rem' }}>🔬 测试方法论</h2>
+                <h2 style={{ fontSize: '1.75rem', marginBottom: '1.5rem' }}>🔬 Testing Methodology</h2>
                 <div style={{ color: 'var(--text-secondary)', lineHeight: '1.8' }}>
                     <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginTop: '1.5rem', marginBottom: '0.75rem' }}>
-                        监控频率
+                        Monitoring Frequency
                     </h3>
-                    <p>我们每30分钟对所有VPN服务进行一次完整测试，确保数据的时效性。</p>
+                    <p>We conduct a complete test of all VPN services every 30 minutes to ensure data timeliness.</p>
 
                     <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginTop: '1.5rem', marginBottom: '0.75rem' }}>
-                        测试指标
+                        Test Metrics
                     </h3>
                     <ul style={{ paddingLeft: '2rem', marginTop: '0.5rem' }}>
-                        <li><strong>连接速度</strong>：使用官方VPN客户端连接，测量建立连接所需时间</li>
-                        <li><strong>下载速度</strong>：通过speedtest-cli测试实际下载带宽</li>
-                        <li><strong>延迟测试</strong>：ping多个目标服务器，计算平均往返时间</li>
-                        <li><strong>节点可用性</strong>：测试各地区节点的在线状态</li>
-                        <li><strong>流媒体解锁</strong>：检测Netflix、YouTube等平台的访问能力</li>
+                        <li><strong>Connection Speed</strong>: Measure time required to establish connection using official VPN clients</li>
+                        <li><strong>Download Speed</strong>: Test actual download bandwidth via speedtest-cli</li>
+                        <li><strong>Latency Test</strong>: Ping multiple target servers and calculate average round-trip time</li>
+                        <li><strong>Node Availability</strong>: Test online status of nodes in various regions</li>
+                        <li><strong>Streaming Unblocking</strong>: Check access capability to Netflix, YouTube and other platforms</li>
                     </ul>
 
                     <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginTop: '1.5rem', marginBottom: '0.75rem' }}>
-                        测试环境
+                        Test Environment
                     </h3>
                     <p>
-                        所有测试在真实的网络环境下进行，测试服务器位于美国、新加坡等多个地区，
-                        模拟不同地理位置用户的实际使用体验。
+                        All tests are conducted in real network environments. Test servers are located in multiple regions including the United States and Singapore,
+                        simulating actual user experiences from different geographic locations.
+                    </p>
+                </div>
+            </section>
+
+            {/* Affiliate Disclosure */}
+            <section style={{
+                background: 'var(--bg-secondary)',
+                padding: '2rem',
+                borderRadius: '12px',
+                marginBottom: '2rem',
+                border: '1px solid #f59e0b',
+                borderLeft: '4px solid #f59e0b'
+            }}>
+                <h2 style={{ fontSize: '1.75rem', marginBottom: '1.5rem' }}>⚠️ Affiliate Disclosure</h2>
+                <div style={{ color: 'var(--text-secondary)', lineHeight: '1.8' }}>
+                    <p style={{ marginBottom: '1rem' }}>
+                        VPNSpan contains affiliate links. When you purchase VPN services through our links,
+                        we may earn a commission at no additional cost to you.
+                    </p>
+                    <p style={{ marginBottom: '1rem' }}>
+                        <strong>Our Commitment:</strong> We only recommend VPN services that we have actually tested.
+                        All performance data is based on real measurements and is objective and transparent.
+                        Affiliate partnerships do not influence our testing results or recommendations.
+                    </p>
+                    <p>
+                        This site complies with FTC guidelines for affiliate disclosures and maintains editorial independence.
                     </p>
                 </div>
             </section>
@@ -90,43 +116,43 @@ export default function About() {
                 marginBottom: '2rem',
                 border: '1px solid var(--border-color)'
             }}>
-                <h2 style={{ fontSize: '1.75rem', marginBottom: '1.5rem' }}>❓ 常见问题</h2>
+                <h2 style={{ fontSize: '1.75rem', marginBottom: '1.5rem' }}>❓ Frequently Asked Questions</h2>
 
                 <div style={{ color: 'var(--text-secondary)', lineHeight: '1.8' }}>
                     <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                        数据多久更新一次？
+                        How often is data updated?
                     </h3>
                     <p style={{ marginBottom: '1.5rem' }}>
-                        我们每30分钟进行一次全面测试，页面会自动刷新显示最新数据。
+                        We conduct comprehensive tests every 30 minutes, and the page automatically refreshes to display the latest data.
                     </p>
 
                     <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                        如何保证测试的公正性？
+                        How do you ensure testing fairness?
                     </h3>
                     <p style={{ marginBottom: '1.5rem' }}>
-                        VPNSpan是完全独立的第三方监控平台，不接受任何VPN厂商的赞助或付费推广。
-                        所有测试数据基于真实测量，公开透明。
+                        VPNSpan is a completely independent third-party monitoring platform and does not accept any sponsorship or paid promotion from VPN vendors.
+                        All test data is based on real measurements and is open and transparent.
                     </p>
 
                     <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                        测试结果代表我的实际使用体验吗？
+                        Do test results represent my actual usage experience?
                     </h3>
                     <p style={{ marginBottom: '1.5rem' }}>
-                        测试结果反映了我们测试节点的体验，由于网络环境、地理位置、ISP等因素的差异，
-                        您的实际体验可能会有所不同。建议将测试数据作为参考，并结合VPN服务商的试用期自行测试。
+                        Test results reflect the experience from our test nodes. Due to differences in network environment, geographic location, ISP and other factors,
+                        your actual experience may vary. We recommend using test data as a reference and testing yourself during VPN service trial periods.
                     </p>
 
                     <h3 style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                        为什么没有我使用的VPN？
+                        Why isn't my VPN listed?
                     </h3>
                     <p>
-                        我们目前监控主流的商业VPN服务。如果您希望我们添加特定的VPN服务，
-                        请通过邮件联系我们：<a href="mailto:hello@vpnspan.com">hello@vpnspan.com</a>
+                        We currently monitor mainstream commercial VPN services. If you would like us to add a specific VPN service,
+                        please contact us via email: <a href="mailto:contact@vpnspan.com" style={{ color: 'var(--accent-primary)' }}>contact@vpnspan.com</a>
                     </p>
                 </div>
             </section>
 
-            {/* 联系方式 */}
+            {/* Contact */}
             <div style={{
                 textAlign: 'center',
                 padding: '2rem',
@@ -134,12 +160,12 @@ export default function About() {
                 borderRadius: '12px',
                 border: '1px solid var(--border-color)'
             }}>
-                <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>📧 联系我们</h2>
+                <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>📧 Contact Us</h2>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                    有任何问题或建议，欢迎与我们联系
+                    Have any questions or suggestions? Feel free to contact us
                 </p>
                 <a
-                    href="mailto:hello@vpnspan.com"
+                    href="mailto:contact@vpnspan.com"
                     style={{
                         display: 'inline-block',
                         padding: '0.75rem 2rem',
@@ -151,7 +177,7 @@ export default function About() {
                         textDecoration: 'none'
                     }}
                 >
-                    hello@vpnspan.com
+                    contact@vpnspan.com
                 </a>
             </div>
         </div>

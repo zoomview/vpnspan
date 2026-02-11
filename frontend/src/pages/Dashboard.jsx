@@ -10,7 +10,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         fetchVPNData()
-        // 每5分钟自动刷新
+        // Auto refresh every 5 minutes
         const interval = setInterval(fetchVPNData, 5 * 60 * 1000)
         return () => clearInterval(interval)
     }, [])
@@ -115,7 +115,7 @@ export default function Dashboard() {
 
     return (
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem' }}>
-            {/* 顶部统计卡片 */}
+            {/* Top Stats Cards */}
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
@@ -124,38 +124,38 @@ export default function Dashboard() {
             }}>
                 <StatCard
                     icon={<Globe size={24} />}
-                    title="监控中的VPN"
+                    title="VPNs Monitored"
                     value={vpnData.length}
-                    subtitle="实时监控"
+                    subtitle="Real-time monitoring"
                 />
                 <StatCard
                     icon={<CheckCircle size={24} />}
-                    title="在线服务"
+                    title="Online Services"
                     value={vpnData.filter(v => v.status === 'online').length}
-                    subtitle={`${((vpnData.filter(v => v.status === 'online').length / vpnData.length) * 100).toFixed(0)}% 可用率`}
+                    subtitle={`${((vpnData.filter(v => v.status === 'online').length / vpnData.length) * 100).toFixed(0)}% Availability`}
                 />
                 <StatCard
                     icon={<Zap size={24} />}
-                    title="平均速度"
+                    title="Average Speed"
                     value={`${Math.round(vpnData.reduce((sum, v) => sum + v.speed, 0) / vpnData.length)} Mbps`}
-                    subtitle="全球平均"
+                    subtitle="Global average"
                 />
                 <StatCard
                     icon={<Clock size={24} />}
-                    title="最后更新"
-                    value={lastUpdate ? new Date(lastUpdate).toLocaleTimeString('zh-CN') : '--'}
-                    subtitle={lastUpdate ? `${Math.floor((new Date() - lastUpdate) / 60000)} 分钟前` : '等待更新'}
+                    title="Last Updated"
+                    value={lastUpdate ? new Date(lastUpdate).toLocaleTimeString('en-US') : '--'}
+                    subtitle={lastUpdate ? `${Math.floor((new Date() - lastUpdate) / 60000)} min ago` : 'Waiting for update'}
                 />
             </div>
 
-            {/* 刷新按钮 */}
+            {/* Refresh Button */}
             <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginBottom: '1.5rem'
             }}>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>VPN性能监控矩阵</h2>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>VPN Performance Matrix</h2>
                 <button
                     onClick={fetchVPNData}
                     disabled={loading}
@@ -174,7 +174,7 @@ export default function Dashboard() {
                     }}
                 >
                     <RefreshCw size={18} className={loading ? 'loading' : ''} />
-                    {loading ? '刷新中...' : '刷新数据'}
+                    {loading ? 'Refreshing...' : 'Refresh Data'}
                 </button>
             </div>
 
@@ -194,14 +194,14 @@ export default function Dashboard() {
                             background: 'var(--bg-tertiary)',
                             borderBottom: '2px solid var(--border-color)'
                         }}>
-                            <th style={thStyle}>服务商</th>
-                            <th style={thStyle}>状态</th>
-                            <th style={thStyle}>可用性</th>
-                            <th style={thStyle}>速度</th>
-                            <th style={thStyle}>延迟</th>
-                            <th style={thStyle}>节点</th>
-                            <th style={thStyle}>流媒体</th>
-                            <th style={thStyle}>操作</th>
+                            <th style={thStyle}>Provider</th>
+                            <th style={thStyle}>Status</th>
+                            <th style={thStyle}>Uptime</th>
+                            <th style={thStyle}>Speed</th>
+                            <th style={thStyle}>Latency</th>
+                            <th style={thStyle}>Nodes</th>
+                            <th style={thStyle}>Streaming</th>
+                            <th style={thStyle}>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -225,7 +225,7 @@ export default function Dashboard() {
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                         {getStatusIcon(vpn.status)}
                                         <span style={{ textTransform: 'capitalize' }}>
-                                            {vpn.status === 'online' ? '在线' : vpn.status === 'degraded' ? '降级' : '离线'}
+                                            {vpn.status === 'online' ? 'Online' : vpn.status === 'degraded' ? 'Degraded' : 'Offline'}
                                         </span>
                                     </div>
                                 </td>
@@ -279,7 +279,7 @@ export default function Dashboard() {
                                             display: 'inline-block'
                                         }}
                                     >
-                                        查看详情
+                                        View Details
                                     </Link>
                                 </td>
                             </tr>
@@ -288,7 +288,7 @@ export default function Dashboard() {
                 </table>
             </div>
 
-            {/* 说明文字 */}
+            {/* Info Section */}
             <div style={{
                 marginTop: '2rem',
                 padding: '1.5rem',
@@ -296,10 +296,10 @@ export default function Dashboard() {
                 borderRadius: '8px',
                 borderLeft: '4px solid var(--accent-primary)'
             }}>
-                <h3 style={{ marginBottom: '0.75rem', fontSize: '1.1rem' }}>📊 关于监控数据</h3>
+                <h3 style={{ marginBottom: '0.75rem', fontSize: '1.1rem' }}>📊 About Monitoring Data</h3>
                 <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8' }}>
-                    VPNSpan 每30分钟自动测试所有VPN服务的性能指标。数据包括连接速度、延迟、节点可用性和流媒体解锁能力。
-                    所有测试均在真实网络环境下进行，数据客观公正。点击"查看详情"可查看24小时性能趋势图表。
+                    VPNSpan automatically tests all VPN services every 30 minutes. Data includes connection speed, latency, node availability, and streaming unblocking capabilities.
+                    All tests are conducted in real network environments with objective and unbiased results. Click "View Details" for 24-hour performance trend charts.
                 </p>
             </div>
         </div>
