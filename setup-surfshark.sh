@@ -13,6 +13,13 @@ sudo mkdir -p /etc/openvpn/surfshark
 
 # 2. 下载 Surfshark OpenVPN 配置文件
 echo "📥 Downloading Surfshark OpenVPN configs..."
+
+# 检查并安装 unzip
+if ! command -v unzip &> /dev/null; then
+    echo "📦 Installing unzip..."
+    sudo apt-get update && sudo apt-get install -y unzip
+fi
+
 cd /tmp
 
 # 下载 Surfshark 的 OpenVPN 配置包
