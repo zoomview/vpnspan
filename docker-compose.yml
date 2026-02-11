@@ -27,9 +27,15 @@ services:
       - ./backend/.env
     volumes:
       - ./backend/data:/app/data
+      - /etc/openvpn:/etc/openvpn:ro # 关键修复：映射主机VPN配置到容器（只读）
     networks:
       - vpnspan-network
     restart: unless-stopped
+    # OpenVPN 需要的网络权限
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
   # 监控调度器（可选，单独运行）
   # monitor:
   #   build:
