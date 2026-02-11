@@ -110,75 +110,52 @@ export async function testVPN(config) {
 }
 
 /**
- * 连接VPN
- * @param {Object} config - VPN配置
- * @returns {Promise<Object>} VPN进程对象
- */
-async function connectVPN(config) {
-    // 检查配置
-    if (!config.configFile && !config.clientCommand) {
-        throw new Error('缺少VPN配置文件或客户端命令')
-    }
-
-    // 方法1: 使用OpenVPN配置文件
-    if (config.configFile && config.configFile.endsWith('.ovpn')) {
-        return await connectOpenVPN(config)
-    }
-
-    // 方法2: 使用WireGuard配置
-    if (config.configFile && config.configFile.endsWith('.conf')) {
-        return await connectWireGuard(config)
-    }
-
-    // 方法3: 使用原生客户端命令行
-    if (config.clientCommand) {
-        return await connectNativeClient(config)
-    }
-
-    throw new Error('不支持的VPN类型')
-}
-
-/**
- * 连接OpenVPN
+ * 连接OpenVPN (简化稳定版)
  */
 async function connectOpenVPN(config) {
     return new Promise((resolve, reject) => {
-        // Windows上使用OpenVPN GUI的命令行
-        // 或者直接使用openvpn.exe
-
+        // 创建认证文件
         const authFile = createAuthFile(config.username, config.password)
 
+        // 构建参数
         const args = [
             '--config', config.configFile,
             '--auth-user-pass', authFile,
-            '--auth-retry', 'nointeract'
+            '--auth-retry', 'nointeract',
+            '--script-security', '2',
+            '--up-delay'
         ]
+
+        console.log(`[OpenVPN] Starting: openvpn ${args.join(' ')}`)
 
         const process = spawn('openvpn', args, {
             stdio: ['ignore', 'pipe', 'pipe']
         })
 
         let connected = false
+
+        // 设置超时
         const timeout = setTimeout(() => {
             if (!connected) {
+                console.error('[OpenVPN] Connection timeout')
                 process.kill()
-                reject(new Error('OpenVPN连接超时'))
+                reject(new Error('OpenVPN连接超时 (30s)'))
             }
-        }, CONNECTION_TIMEOUT)
+        }, 30000)
 
+        // 监听输出
         process.stdout.on('data', (data) => {
             const output = data.toString()
-            console.log('[OpenVPN]', output.trim())
+            // console.log('[OpenVPN]', output.trim()) // 减少日志噪音
 
-            // 检测连接成功的标志
             if (output.includes('Initialization Sequence Completed')) {
+                console.log('[OpenVPN] Connection Established!')
                 connected = true
                 clearTimeout(timeout)
-
-                // 等待IP更新（增加等待时间，让VPN网络稳定）
+                // 给足时间让路由表更新
                 setTimeout(() => {
                     resolve({ process, type: 'openvpn', authFile })
-                }, 8000) // 从3秒增加到8秒
+                }, 5000)
             }
         })
 
@@ -186,59 +163,23 @@ async function connectOpenVPN(config) {
             console.error('[OpenVPN Error]', data.toString().trim())
         })
 
-        process.on('error', (error) => {
-            clearTimeout(timeout)
-            reject(new Error(`OpenVPN启动失败: ${error.message}`))
+        process.on('close', (code) => {
+            if (!connected) {
+                clearTimeout(timeout)
+                reject(new Error(`OpenVPN exited (code ${code})`))
+            }
         })
     })
 }
 
 /**
- * 连接WireGuard
+ * 连接VPN (入口)
  */
-async function connectWireGuard(config) {
-    try {
-        // Windows: 使用wireguard.exe
-        // Linux: 使用wg-quick
-
-        const isWindows = process.platform === 'win32'
-        const command = isWindows
-            ? `wireguard /installtunnelservice "${config.configFile}"`
-            : `wg-quick up ${config.configFile}`
-
-        await execPromise(command)
-
-        // 等待连接建立
-        await sleep(5000)
-
-        return {
-            type: 'wireguard',
-            configFile: config.configFile
-        }
-    } catch (error) {
-        throw new Error(`WireGuard连接失败: ${error.message}`)
+async function connectVPN(config) {
+    if (config.configFile && config.configFile.endsWith('.ovpn')) {
+        return await connectOpenVPN(config)
     }
-}
-
-/**
- * 使用原生客户端连接
- */
-async function connectNativeClient(config) {
-    try {
-        // 例如: expressvpn connect, nordvpn connect
-        const { stdout } = await execPromise(config.clientCommand)
-        console.log('[Native Client]', stdout.trim())
-
-        // 等待连接建立
-        await sleep(5000)
-
-        return {
-            type: 'native',
-            command: config.clientCommand
-        }
-    } catch (error) {
-        throw new Error(`原生客户端连接失败: ${error.message}`)
-    }
+    throw new Error(`Unsupported VPN config: ${config.configFile}`)
 }
 
 /**
@@ -246,33 +187,16 @@ async function connectNativeClient(config) {
  */
 async function disconnectVPN(vpnProcess, config) {
     try {
-        if (!vpnProcess) return
+        if (!vpnProcess || !vpnProcess.process) return
 
-        if (vpnProcess.type === 'openvpn') {
-            // 终止OpenVPN进程
-            vpnProcess.process.kill('SIGTERM')
+        console.log('[OpenVPN] 断开连接...')
+        vpnProcess.process.kill('SIGTERM')
 
-            // 删除临时认证文件
-            if (vpnProcess.authFile && fs.existsSync(vpnProcess.authFile)) {
-                fs.unlinkSync(vpnProcess.authFile)
-            }
-
-            await sleep(2000)
-        }
-        else if (vpnProcess.type === 'wireguard') {
-            const isWindows = process.platform === 'win32'
-            const command = isWindows
-                ? `wireguard /uninstalltunnelservice "${vpnProcess.configFile}"`
-                : `wg-quick down ${vpnProcess.configFile}`
-
-            await execPromise(command)
-        }
-        else if (vpnProcess.type === 'native') {
-            // 使用对应的断开命令
-            const disconnectCmd = config.disconnectCommand || 'expressvpn disconnect'
-            await execPromise(disconnectCmd)
+        if (vpnProcess.authFile && fs.existsSync(vpnProcess.authFile)) {
+            fs.unlinkSync(vpnProcess.authFile)
         }
 
+        await sleep(2000)
         console.log('🔌 VPN已断开')
     } catch (error) {
         console.error('断开VPN时出错:', error.message)
