@@ -178,7 +178,7 @@ async function runMonitoring() {
 }
 
 // 初始化调度器
-function initScheduler() {
+export function initScheduler() {
     ensureDataDirs()
 
     console.log('🚀 VPNSpan Monitoring Scheduler Started')
@@ -195,6 +195,3 @@ function initScheduler() {
 
     console.log('\n✅ Scheduler is running. Press Ctrl+C to stop.\n')
 }
-
-// 启动调度器
-initScheduler()

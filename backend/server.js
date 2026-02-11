@@ -6,9 +6,24 @@ import { dirname, join } from 'path'
 import fs from 'fs'
 
 // 启动监控调度器
-import './monitor/scheduler.js'
+import { initScheduler } from './monitor/scheduler.js'
 
 dotenv.config()
+// ... (中间代码保持不变) ...
+
+// 启动服务器
+app.listen(PORT, () => {
+    console.log(`🚀 VPNSpan API server running on http://localhost:${PORT}`)
+    console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`)
+
+    // 启动监控任务
+    try {
+        console.log('🔄 Initializing VPN Monitor...')
+        initScheduler()
+    } catch (error) {
+        console.error('❌ Failed to start VPN Monitor:', error)
+    }
+})
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
