@@ -44,7 +44,7 @@ export default function VPNDetail() {
             const hour = new Date()
             hour.setHours(hour.getHours() - i)
             history.push({
-                time: hour.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }),
+                time: hour.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
                 speed: info.speed + Math.random() * 20 - 10,
                 latency: info.latency + Math.random() * 10 - 5,
                 uptime: info.uptime + Math.random() * 2 - 1
@@ -64,7 +64,7 @@ export default function VPNDetail() {
             nodes: {
                 total: 52,
                 online: 50,
-                locations: ['美国', '英国', '日本', '新加坡', '德国', '加拿大', '澳大利亚', '法国']
+                locations: ['United States', 'United Kingdom', 'Japan', 'Singapore', 'Germany', 'Canada', 'Australia', 'France']
             },
             streaming: {
                 netflix: true,

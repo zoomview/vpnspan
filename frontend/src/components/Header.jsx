@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Activity } from 'lucide-react'
+import LogoIcon from './LogoIcon'
 
 export default function Header() {
     return (
@@ -27,15 +27,18 @@ export default function Header() {
                     textDecoration: 'none',
                     color: 'var(--text-primary)'
                 }}>
-                    <Activity size={28} color="var(--accent-primary)" />
+                    <LogoIcon size={32} />
                     <span style={{
                         fontSize: '1.5rem',
                         fontWeight: 'bold',
-                        background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent'
+                        letterSpacing: '0.5px'
                     }}>
-                        VPN Span
+                        <span style={{ color: 'var(--text-primary)' }}>VPN</span>
+                        <span style={{
+                            background: 'linear-gradient(135deg, #3B82F6, #7C3AED)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent'
+                        }}>Span</span>
                     </span>
                 </Link>
 
