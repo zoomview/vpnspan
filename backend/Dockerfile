@@ -1,42 +1,48 @@
-# 后端Dockerfile
-FROM node:18-alpine
+FROM ubuntu:22.04
+
+# 避免交互式前端报错
+ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /app
 
-# 安装依赖
+# 1. 更新源并安装基础工具
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg \
+    ca-certificates \
+    iproute2 \
+    procps \
+    unzip \
+    wget \
+    openvpn \
+    python3 \
+    && rm -rf /var/lib/apt/lists/*
+
+# 2. 安装 Node.js 18.x (来自 NodeSource)
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_18.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
+
+# 3. 安装官方 Ookla Speedtest CLI (替代不稳定的 pip 版本)
+RUN curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash && \
+    apt-get install -y speedtest && \
+    rm -rf /var/lib/apt/lists/*
+
+# 4. 创建必要的目录和设备节点
+RUN mkdir -p /app/data/history /dev/net
+# 尝试创建 tun 设备，如果失败也不报错（因为是在构建阶段）
+RUN mknod /dev/net/tun c 10 200 || true
+
+# 5. 安装 Node 依赖
 COPY package*.json ./
 RUN npm ci --only=production
 
-# 安装OpenVPN和必要的测试工具
-RUN apk add --no-cache \
-    openvpn \
-    python3 \
-    py3-pip \
-    bash \
-    procps \
-    iproute2 \
-    curl
-
-# 安装speedtest-cli (使用Ookla官方版本或pip版本)
-# 这里使用pip安装speedtest-cli，因为它更轻量且兼容性好
-RUN pip3 install speedtest-cli
-
-# 复制源代码
+# 6. 复制源代码和启动脚本
 COPY . .
-
-# 创建数据目录
-RUN mkdir -p /app/data/history
-
-# 创建必要的TUN设备节点（如果宿主机未共享）以及配置目录
-RUN mkdir -p /dev/net && \
-    if [ ! -c /dev/net/tun ]; then \
-    mknod /dev/net/tun c 10 200; \
-    fi
+RUN chmod +x start.sh
 
 EXPOSE 5000
-
-# 添加启动脚本权限
-COPY start.sh .
-RUN chmod +x start.sh
 
 CMD ["./start.sh"]
