@@ -31,7 +31,7 @@ const SPEED_TEST_DURATION = 10     // 速度测试时长（秒）
  * @returns {Promise<Object>} 测试结果
  */
 export async function testVPN(config) {
-    console.log(`\n🔍 开始测试 ${config.name}...`)
+    console.log(`\n🔍 Starting test for ${config.name}...`)
 
     let originalIP = null
     let vpnProcess = null
@@ -39,13 +39,13 @@ export async function testVPN(config) {
     try {
         // 1. 获取原始IP
         originalIP = await getCurrentIP()
-        console.log(`📍 当前IP: ${originalIP}`)
+        console.log(`📍 Current IP: ${originalIP}`)
 
-        // 2. 连接VPN
+        // 2. Connect to VPN
         const startTime = Date.now()
         vpnProcess = await connectVPN(config)
         const connectionTime = Date.now() - startTime
-        console.log(`✅ VPN连接成功，耗时: ${connectionTime}ms`)
+        console.log(`✅ VPN connected, duration: ${connectionTime}ms`)
 
         // 3. 验证IP已改变（或使用本地IP）
         const vpnIP = await getCurrentIP()
@@ -58,26 +58,26 @@ export async function testVPN(config) {
             vpnIP === 'VPN-Connected'
 
         if (!isVPNConnected) {
-            throw new Error('VPN连接后IP未改变')
+            throw new Error('VPN connected but IP did not change')
         }
         console.log(`📍 VPN IP: ${vpnIP}`)
 
-        // 4. 速度测试
-        console.log(`⚡ 开始速度测试...`)
+        // 4. Speed Test
+        console.log(`⚡ Starting speed test...`)
         const speedResult = await testSpeed()
-        console.log(`📊 速度: ↓${speedResult.download}Mbps ↑${speedResult.upload}Mbps Ping:${speedResult.ping}ms`)
+        console.log(`📊 Speed: ↓${speedResult.download}Mbps ↑${speedResult.upload}Mbps Ping:${speedResult.ping}ms`)
 
-        // 5. 流媒体测试
-        console.log(`🎬 检测流媒体解锁...`)
+        // 5. Streaming Test
+        console.log(`🎬 Checking streaming support...`)
         const streamingResult = await testStreaming()
-        console.log(`📺 流媒体: Netflix=${streamingResult.netflix} YouTube=${streamingResult.youtube}`)
+        console.log(`📺 Streaming: Netflix=${streamingResult.netflix} YouTube=${streamingResult.youtube}`)
 
         // 6. 计算可用性
         const uptime = calculateUptime(speedResult, streamingResult)
 
-        // 7. 断开VPN
+        // 7. Disconnect VPN
         await disconnectVPN(vpnProcess, config)
-        console.log(`✅ ${config.name} 测试完成`)
+        console.log(`✅ ${config.name} test completed`)
 
         // 返回结果
         return {
@@ -98,7 +98,7 @@ export async function testVPN(config) {
         }
 
     } catch (error) {
-        console.error(`❌ ${config.name} 测试失败:`, error.message)
+        console.error(`❌ ${config.name} test failed:`, error.message)
 
         // 确保断开连接
         if (vpnProcess) {

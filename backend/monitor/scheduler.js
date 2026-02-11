@@ -23,7 +23,7 @@ const VPN_CONFIGS = [
         website: 'https://www.expressvpn.com',
         tier: 'premium',          // 定位：高端
         monthlyPrice: 12.95,      // 美元
-        description: '行业标杆，速度最快，口碑最好',
+        description: 'Industry benchmark, fastest speed, best reputation',
         affiliateCommission: 50,  // 每单佣金约$50
         enabled: false,  // 暂时禁用，等配置后再启用
         // 未来扩展：添加测试凭证
@@ -37,7 +37,7 @@ const VPN_CONFIGS = [
         website: 'https://nordvpn.com',
         tier: 'premium',
         monthlyPrice: 11.99,
-        description: '用户量最大，节点多，适合流媒体',
+        description: 'Largest user base, many nodes, great for streaming',
         affiliateCommission: 40,
         enabled: false  // 暂时禁用，等配置后再启用
     },
@@ -47,7 +47,7 @@ const VPN_CONFIGS = [
         website: 'https://surfshark.com',
         tier: 'budget',           // 定位：性价比
         monthlyPrice: 1.99,
-        description: '性价比之王，无限设备，年轻用户喜爱',
+        description: 'Best value, unlimited devices, popular with youth',
         affiliateCommission: 30,
         configFile: process.env.SURFSHARK_OVPN_PATH || '/etc/openvpn/surfshark/us-nyc.prod.surfshark.com_tcp.ovpn',
         username: process.env.SURFSHARK_USER || '',
@@ -60,7 +60,7 @@ const VPN_CONFIGS = [
         website: 'https://protonvpn.com',
         tier: 'mid-range',        // 定位：中端
         monthlyPrice: 9.99,
-        description: '隐私为主，瑞士法律，技术派首选',
+        description: 'Privacy focused, Swiss law, strict no-logs',
         affiliateCommission: 20,
         configFile: process.env.PROTONVPN_OVPN_PATH || '/etc/openvpn/protonvpn/us-free-110.protonvpn.tcp.ovpn',
         username: process.env.PROTONVPN_USER || '',
@@ -73,7 +73,7 @@ const VPN_CONFIGS = [
         website: 'https://www.cyberghostvpn.com',
         tier: 'budget',
         monthlyPrice: 2.19,
-        description: '节点最多，价格便宜，适合入门',
+        description: 'Most servers, affordable, beginner friendly',
         affiliateCommission: 25,
         enabled: false  // 暂时禁用，等配置后再启用
     }

@@ -102,22 +102,43 @@ else
     echo "✅ Extracted Surfshark configs"
 fi
 
-# 3. 创建认证文件（自动登录用）
-cat > /etc/openvpn/surfshark/auth.txt << 'EOF'
-wYsxxz2JjWUxKCVRUESep2Lt
-BCwqCpc4sbJKMpRZcJm3AaGX
+# 3. 创建后端环境变量文件 (包含凭证)
+echo "📝 Configuring backend environment..."
+# 获取脚本所在目录的绝对路径
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+ENV_FILE="$SCRIPT_DIR/backend/.env"
+
+cat > "$ENV_FILE" << EOF
+# VPNSpan Backend Configuration
+PORT=5000
+NODE_ENV=production
+
+# Surfshark VPN
+SURFSHARK_USER=wYsxxz2JjWUxKCVRUESep2Lt
+SURFSHARK_PASS=BCwqCpc4sbJKMpRZcJm3AaGX
+SURFSHARK_OVPN_PATH=/etc/openvpn/surfshark/us-nyc.prod.surfshark.com_tcp.ovpn
+
+# ProtonVPN
+PROTONVPN_USER=73GqNmISgumJYEyx+f1
+PROTONVPN_PASS=Opjyt9zd14AnMR172BBEXIl3skh80FH8
+PROTONVPN_OVPN_PATH=/etc/openvpn/protonvpn/us-free-110.protonvpn.tcp.ovpn
 EOF
 
-chmod 600 /etc/openvpn/surfshark/auth.txt
+echo "✅ Backend .env created at $ENV_FILE"
 
-# 4. 设置权限
+# 4. 设置OpenVPN配置目录权限
 sudo chmod -R 600 /etc/openvpn/surfshark/
 sudo chmod 700 /etc/openvpn/surfshark/
 
-# 5. 测试连接
-echo "🔌 Testing Surfshark connection..."
+# 5. (可选) 测试OpenVPN连接
+# 注意：实际生产环境由Node.js应用通过OpenVPN客户端调用
+echo "🔌 Testing connection (optional)..."
+# 创建临时auth以供测试
+echo -e "wYsxxz2JjWUxKCVRUESep2Lt\nBCwqCpc4sbJKMpRZcJm3AaGX" > /tmp/temp_surfshark_auth.txt
+chmod 600 /tmp/temp_surfshark_auth.txt
+
 sudo openvpn --config /etc/openvpn/surfshark/us-nyc.prod.surfshark.com_tcp.ovpn \
-    --auth-user-pass /etc/openvpn/surfshark/auth.txt \
+    --auth-user-pass /tmp/temp_surfshark_auth.txt \
     --auth-retry nointeract \
     --connect-timeout 30 \
     --daemon

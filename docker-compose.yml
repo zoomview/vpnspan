@@ -23,12 +23,13 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=5000
+    env_file:
+      - ./backend/.env
     volumes:
       - ./backend/data:/app/data
     networks:
       - vpnspan-network
     restart: unless-stopped
-
   # 监控调度器（可选，单独运行）
   # monitor:
   #   build:
