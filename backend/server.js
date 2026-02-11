@@ -1,9 +1,13 @@
+```javascript
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
 import fs from 'fs'
+
+// 启动监控调度器
+import './monitor/scheduler.js'
 
 dotenv.config()
 
@@ -103,14 +107,14 @@ function readVPNStatus() {
 
 // 读取VPN历史数据
 function readVPNHistory(vpnId) {
-    const historyFile = join(HISTORY_DIR, `${vpnId}.json`)
+    const historyFile = join(HISTORY_DIR, `${ vpnId }.json`)
     try {
         if (fs.existsSync(historyFile)) {
             const data = fs.readFileSync(historyFile, 'utf8')
             return JSON.parse(data)
         }
     } catch (error) {
-        console.error(`Error reading history for ${vpnId}:`, error)
+        console.error(`Error reading history for ${ vpnId }: `, error)
     }
 
     // 生成24小时模拟数据
@@ -190,7 +194,7 @@ app.get('/api/vpn/:id', (req, res) => {
 
         res.json(detail)
     } catch (error) {
-        console.error(`Error in /api/vpn/${req.params.id}:`, error)
+        console.error(`Error in /api/vpn / ${ req.params.id }: `, error)
         res.status(500).json({ error: 'Failed to fetch VPN details' })
     }
 })
@@ -218,7 +222,7 @@ app.use((err, req, res, next) => {
 // 启动服务器
 app.listen(PORT, () => {
     console.log(`🚀 VPNSpan API server running on http://localhost:${PORT}`)
-    console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`)
+console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`)
 })
 
 export default app
