@@ -1,0 +1,27 @@
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Monitoring Wave Icon (Refined & Smoother) -->
+  <!-- 使用三次贝塞尔曲线 (Cubic Bézier) 确保极高的平滑度 -->
+  <!-- 路径：起点(5,25) -> 上升谷峰(12.5, 12) -> 下降谷底(27.5, 28) -> 终点(35, 15) -->
+  
+  <path d="M 5 25 C 10 25, 10 12, 20 20 C 30 28, 30 15, 35 15" 
+        stroke="url(#iconGradient)" 
+        stroke-width="3" 
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+        
+  <!-- Data Points -->
+  <!-- 按照路径上的关键位置分布，不再是简单的等距，而是配合曲线起伏 -->
+  <circle cx="5" cy="25" r="2.5" fill="url(#iconGradient)" />
+  <circle cx="20" cy="20" r="2.5" fill="url(#iconGradient)" />
+  <circle cx="35" cy="15" r="2.5" fill="url(#iconGradient)" />
+  
+</svg>

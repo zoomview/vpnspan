@@ -93,18 +93,18 @@ export default function VPNDetail() {
                 color: 'var(--text-secondary)'
             }}>
                 <Activity className="loading" size={32} style={{ marginRight: '1rem' }} />
-                加载中...
+                Loading...
             </div>
         )
     }
 
     if (!vpnData) {
-        return <div style={{ padding: '2rem', textAlign: 'center' }}>未找到VPN数据</div>
+        return <div style={{ padding: '2rem', textAlign: 'center' }}>VPN data not found</div>
     }
 
     return (
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem' }}>
-            {/* 返回按钮 */}
+            {/* Back button */}
             <Link to="/" style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -114,10 +114,10 @@ export default function VPNDetail() {
                 fontSize: '0.95rem'
             }}>
                 <ArrowLeft size={18} />
-                返回监控面板
+                Back to Dashboard
             </Link>
 
-            {/* 标题 */}
+            {/* Title */}
             <h1 style={{ fontSize: '2rem', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 {vpnData.name}
                 <span style={{
@@ -127,11 +127,11 @@ export default function VPNDetail() {
                     color: 'white',
                     borderRadius: '12px'
                 }}>
-                    在线
+                    Online
                 </span>
             </h1>
 
-            {/* 当前状态卡片 */}
+            {/* Current Stats Cards */}
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
@@ -140,35 +140,35 @@ export default function VPNDetail() {
             }}>
                 <MetricCard
                     icon={<TrendingUp size={24} />}
-                    title="可用性"
+                    title="Uptime"
                     value={`${vpnData.currentStats.uptime.toFixed(1)}%`}
-                    subtitle="过去24小时"
+                    subtitle="Last 24 hours"
                     color="var(--success)"
                 />
                 <MetricCard
                     icon={<Zap size={24} />}
-                    title="平均速度"
+                    title="Avg Speed"
                     value={`${vpnData.currentStats.speed} Mbps`}
-                    subtitle="下载速度"
+                    subtitle="Download speed"
                     color="var(--accent-primary)"
                 />
                 <MetricCard
                     icon={<Clock size={24} />}
-                    title="延迟"
+                    title="Latency"
                     value={`${vpnData.currentStats.latency}ms`}
-                    subtitle="平均响应时间"
+                    subtitle="Average response time"
                     color="var(--warning)"
                 />
                 <MetricCard
                     icon={<Globe size={24} />}
-                    title="节点状态"
+                    title="Node Status"
                     value={`${vpnData.nodes.online}/${vpnData.nodes.total}`}
-                    subtitle="在线节点"
+                    subtitle="Online nodes"
                     color="var(--success)"
                 />
             </div>
 
-            {/* 24小时性能图表 */}
+            {/* 24-Hour Performance Charts */}
             <div style={{
                 background: 'var(--bg-secondary)',
                 borderRadius: '12px',
@@ -176,12 +176,12 @@ export default function VPNDetail() {
                 marginBottom: '2rem',
                 boxShadow: 'var(--shadow)'
             }}>
-                <h2 style={{ fontSize: '1.25rem', marginBottom: '1.5rem' }}>24小时性能趋势</h2>
+                <h2 style={{ fontSize: '1.25rem', marginBottom: '1.5rem' }}>24-Hour Performance Trends</h2>
 
-                {/* 速度图表 */}
+                {/* Speed Chart */}
                 <div style={{ marginBottom: '2rem' }}>
                     <h3 style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                        下载速度 (Mbps)
+                        Download Speed (Mbps)
                     </h3>
                     <ResponsiveContainer width="100%" height={200}>
                         <LineChart data={vpnData.history24h}>
@@ -214,10 +214,10 @@ export default function VPNDetail() {
                     </ResponsiveContainer>
                 </div>
 
-                {/* 延迟图表 */}
+                {/* Latency Chart */}
                 <div>
                     <h3 style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                        延迟 (ms)
+                        Latency (ms)
                     </h3>
                     <ResponsiveContainer width="100%" height={200}>
                         <LineChart data={vpnData.history24h}>
@@ -251,14 +251,14 @@ export default function VPNDetail() {
                 </div>
             </div>
 
-            {/* 详细信息 */}
+            {/* Detailed Information */}
             <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
                 gap: '1.5rem'
             }}>
-                {/* 节点分布 */}
-                <InfoCard title="节点分布">
+                {/* Node Distribution */}
+                <InfoCard title="Node Distribution">
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                         {vpnData.nodes.locations.map(loc => (
                             <span key={loc} style={{
@@ -273,8 +273,8 @@ export default function VPNDetail() {
                     </div>
                 </InfoCard>
 
-                {/* 流媒体支持 */}
-                <InfoCard title="流媒体解锁">
+                {/* Streaming Support */}
+                <InfoCard title="Streaming Unblocking">
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                         {Object.entries(vpnData.streaming).map(([platform, supported]) => (
                             <div key={platform} style={{
@@ -294,8 +294,8 @@ export default function VPNDetail() {
                     </div>
                 </InfoCard>
 
-                {/* 支持的协议 */}
-                <InfoCard title="支持的协议">
+                {/* Supported Protocols */}
+                <InfoCard title="Supported Protocols">
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                         {vpnData.protocols.map(protocol => (
                             <div key={protocol} style={{

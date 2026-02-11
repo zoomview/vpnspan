@@ -144,7 +144,7 @@ export default function Dashboard() {
                     icon={<Clock size={24} />}
                     title="Last Updated"
                     value={lastUpdate ? new Date(lastUpdate).toLocaleTimeString('en-US') : '--'}
-                    subtitle={lastUpdate ? `${Math.floor((new Date() - lastUpdate) / 60000)} min ago` : 'Waiting for update'}
+                    subtitle={lastUpdate ? `${Math.floor((new Date() - new Date(lastUpdate)) / 60000)} min ago` : 'Waiting for update'}
                 />
             </div>
 

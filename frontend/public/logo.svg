@@ -1,0 +1,43 @@
+<svg width="180" height="60" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Monitoring Wave (Time Curve) -->
+  <g id="wave">
+    <!-- Data points -->
+    <circle cx="5" cy="25" r="2.5" fill="url(#brandGradient)" />
+    <circle cx="15" cy="15" r="2.5" fill="url(#brandGradient)" />
+    <circle cx="25" cy="20" r="2.5" fill="url(#brandGradient)" />
+    <circle cx="35" cy="10" r="2.5" fill="url(#brandGradient)" />
+    <circle cx="45" cy="18" r="2.5" fill="url(#brandGra dient)" />
+    <circle cx="55" cy="12" r="2.5" fill="url(#brandGradient)" />
+    
+    <!-- Connecting lines (smooth curve) -->
+    <path d="M 5 25 Q 10 20, 15 15 T 25 20 Q 30 15, 35 10 T 45 18 Q 50 15, 55 12" 
+          stroke="url(#brandGradient)" 
+          stroke-width="2" 
+          fill="none"
+          stroke-linecap="round"/>
+  </g>
+  
+  <!-- Text: VPN SPAN -->
+  <text x="65" y="25" 
+        font-family="Inter, -apple-system, sans-serif" 
+        font-size="20" 
+        font-weight="700" 
+        fill="#1F2937">
+    VPN
+  </text>
+  <text x="65" y="45" 
+        font-family="Inter, -apple-system, sans-serif" 
+        font-size="20" 
+        font-weight="700" 
+        fill="url(#brandGradient)">
+    SPAN
+  </text>
+</svg>
