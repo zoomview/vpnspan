@@ -9,7 +9,12 @@ import fs from 'fs'
 import { initScheduler } from './monitor/scheduler.js'
 
 dotenv.config()
-// ... (中间代码保持不变) ...
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+const app = express()
+const PORT = process.env.PORT || 5000
 
 // 启动服务器
 app.listen(PORT, () => {
@@ -24,12 +29,6 @@ app.listen(PORT, () => {
         console.error('❌ Failed to start VPN Monitor:', error)
     }
 })
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const app = express()
-const PORT = process.env.PORT || 5000
 
 // 中间件
 app.use(cors())

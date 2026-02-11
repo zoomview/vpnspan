@@ -178,7 +178,7 @@ async function runMonitoring() {
 }
 
 // 初始化调度器
-export function initScheduler() {
+async function initScheduler() {
     ensureDataDirs()
 
     console.log('🚀 VPNSpan Monitoring Scheduler Started')
@@ -186,7 +186,7 @@ export function initScheduler() {
     console.log('📊 Monitoring VPNs:', VPN_CONFIGS.map(c => c.name).join(', '))
 
     // 立即运行一次
-    runMonitoring()
+    await runMonitoring()
 
     // 每30分钟运行一次 (cron: 0,30 * * * *)
     cron.schedule('0,30 * * * *', () => {
@@ -195,3 +195,10 @@ export function initScheduler() {
 
     console.log('\n✅ Scheduler is running. Press Ctrl+C to stop.\n')
 }
+
+// 如果是直接运行此脚本，则启动调度器
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    initScheduler()
+}
+
+export { initScheduler }
