@@ -172,7 +172,7 @@ app.get('/api/vpn/:id', (req, res) => {
             nodes: {
                 total: vpn.nodes.total,
                 online: vpn.nodes.online,
-                locations: ['美国', '英国', '日本', '新加坡', '德国', '加拿大', '澳大利亚', '法国']
+                locations: ['United States', 'United Kingdom', 'Japan', 'Singapore', 'Germany', 'Canada', 'Australia', 'France']
             },
             streaming: {
                 ...vpn.streaming,

@@ -3,6 +3,9 @@ import { testVPN } from './vpn-tester.js'
 import fs from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import dotenv from 'dotenv'
+
+dotenv.config({ path: join(dirname(fileURLToPath(import.meta.url)), '..', '.env') })
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -43,10 +46,13 @@ const VPN_CONFIGS = [
         name: 'Surfshark',
         website: 'https://surfshark.com',
         tier: 'budget',           // 定位：性价比
-        monthlyPrice: 2.49,
+        monthlyPrice: 1.99,
         description: '性价比之王，无限设备，年轻用户喜爱',
         affiliateCommission: 30,
-        enabled: false  // 暂时禁用，等配置后再启用
+        configFile: process.env.SURFSHARK_OVPN_PATH || '/etc/openvpn/surfshark/us-nyc.prod.surfshark.com_tcp.ovpn',
+        username: process.env.SURFSHARK_USER || '',
+        password: process.env.SURFSHARK_PASS || '',
+        enabled: !!(process.env.SURFSHARK_USER && process.env.SURFSHARK_PASS)
     },
     {
         id: 'protonvpn',
@@ -56,10 +62,10 @@ const VPN_CONFIGS = [
         monthlyPrice: 9.99,
         description: '隐私为主，瑞士法律，技术派首选',
         affiliateCommission: 20,
-        configFile: 'C:/vpn-configs/us-free-110.protonvpn.tcp.ovpn',  // Windows路径
-        username: '73GqNmISgumJYEyx+f1',  // 替换为实际用户名
-        password: 'Opjyt9zd14AnMR172BBEXIl3skh80FH8',     // 替换为实际密码
-        enabled: true
+        configFile: process.env.PROTONVPN_OVPN_PATH || '/etc/openvpn/protonvpn/us-free-110.protonvpn.tcp.ovpn',
+        username: process.env.PROTONVPN_USER || '',
+        password: process.env.PROTONVPN_PASS || '',
+        enabled: !!(process.env.PROTONVPN_USER && process.env.PROTONVPN_PASS)
     },
     {
         id: 'cyberghost',
