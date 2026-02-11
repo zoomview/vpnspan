@@ -5,6 +5,8 @@ import VPNDetail from './pages/VPNDetail'
 import About from './pages/About'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
+import Blog from './pages/Blog'
+import BlogPost from './pages/BlogPost'
 
 function App() {
     return (
@@ -16,6 +18,8 @@ function App() {
                         <Route path="/" element={<Dashboard />} />
                         <Route path="/vpn/:id" element={<VPNDetail />} />
                         <Route path="/about" element={<About />} />
+                        <Route path="/blog" element={<Blog />} />
+                        <Route path="/blog/:slug" element={<BlogPost />} />
                         <Route path="/privacy" element={<Privacy />} />
                         <Route path="/terms" element={<Terms />} />
                     </Routes>

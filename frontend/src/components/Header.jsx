@@ -7,7 +7,10 @@ export default function Header() {
             background: 'var(--bg-secondary)',
             borderBottom: '1px solid var(--border-color)',
             padding: '1rem 2rem',
-            boxShadow: 'var(--shadow)'
+            position: 'sticky',
+            top: 0,
+            zIndex: 1000,
+            backdropFilter: 'blur(10px)'
         }}>
             <div style={{
                 maxWidth: '1400px',
@@ -16,22 +19,30 @@ export default function Header() {
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
+                {/* Logo */}
                 <Link to="/" style={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.75rem',
-                    fontSize: '1.5rem',
-                    fontWeight: 'bold',
-                    color: 'var(--text-primary)',
-                    textDecoration: 'none'
+                    textDecoration: 'none',
+                    color: 'var(--text-primary)'
                 }}>
-                    <Activity size={32} color="var(--accent-primary)" />
-                    <span>VPN<span style={{ color: 'var(--accent-primary)' }}>Span</span></span>
+                    <Activity size={28} color="var(--accent-primary)" />
+                    <span style={{
+                        fontSize: '1.5rem',
+                        fontWeight: 'bold',
+                        background: 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary))',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent'
+                    }}>
+                        VPN Span
+                    </span>
                 </Link>
 
+                {/* Navigation */}
                 <nav style={{
                     display: 'flex',
-                    gap: '2rem',
+                    gap: '0.5rem',
                     alignItems: 'center'
                 }}>
                     <Link to="/" style={{
@@ -50,6 +61,23 @@ export default function Header() {
                             e.target.style.color = 'var(--text-secondary)'
                         }}>
                         Dashboard
+                    </Link>
+                    <Link to="/blog" style={{
+                        color: 'var(--text-secondary)',
+                        fontSize: '1rem',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '6px',
+                        transition: 'all 0.3s ease'
+                    }}
+                        onMouseEnter={(e) => {
+                            e.target.style.background = 'var(--bg-tertiary)'
+                            e.target.style.color = 'var(--text-primary)'
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.background = 'transparent'
+                            e.target.style.color = 'var(--text-secondary)'
+                        }}>
+                        Blog
                     </Link>
                     <Link to="/about" style={{
                         color: 'var(--text-secondary)',
