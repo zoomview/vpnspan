@@ -41,41 +41,18 @@ const VPN_CONFIGS = [
         affiliateCommission: 40,
         enabled: false  // 暂时禁用，等配置后再启用
     },
-    {
+{
         id: 'surfshark',
         name: 'Surfshark',
         website: 'https://surfshark.com',
-        tier: 'budget',           // 定位：性价比
+        tier: 'budget',
         monthlyPrice: 1.99,
         description: 'Best value, unlimited devices, popular with youth',
         affiliateCommission: 30,
-        configFile: process.env.SURFSHARK_OVPN_PATH || '/etc/openvpn/surfshark/us-nyc.prod.surfshark.com_tcp.ovpn',
+        configFile: process.env.SURFSHARK_OVPN_PATH || '/etc/openvpn/us-lax.prod.surfshark.com_tcp.ovpn',
         username: process.env.SURFSHARK_USER || '',
         password: process.env.SURFSHARK_PASS || '',
-        enabled: !!(process.env.SURFSHARK_USER && process.env.SURFSHARK_PASS)
-    },
-    {
-        id: 'protonvpn',
-        name: 'ProtonVPN',
-        website: 'https://protonvpn.com',
-        tier: 'mid-range',        // 定位：中端
-        monthlyPrice: 9.99,
-        description: 'Privacy focused, Swiss law, strict no-logs',
-        affiliateCommission: 20,
-        configFile: process.env.PROTONVPN_OVPN_PATH || '/etc/openvpn/protonvpn/us-free-110.protonvpn.tcp.ovpn',
-        username: process.env.PROTONVPN_USER || '',
-        password: process.env.PROTONVPN_PASS || '',
-        enabled: !!(process.env.PROTONVPN_USER && process.env.PROTONVPN_PASS)
-    },
-    {
-        id: 'cyberghost',
-        name: 'CyberGhost',
-        website: 'https://www.cyberghostvpn.com',
-        tier: 'budget',
-        monthlyPrice: 2.19,
-        description: 'Most servers, affordable, beginner friendly',
-        affiliateCommission: 25,
-        enabled: false  // 暂时禁用，等配置后再启用
+        enabled: true
     }
 ]
 
