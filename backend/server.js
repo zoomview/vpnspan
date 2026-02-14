@@ -21,7 +21,8 @@ const PORT = process.env.PORT || 5000
 
 // 启动服务器
 app.listen(PORT, () => {
-    console.log(`VPNSpan API running on port ${PORT}`)
+    console.log(`🚀 VPNSpan API server running on http://localhost:${PORT}`)
+    console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`)
 })
 
 // 中间件
