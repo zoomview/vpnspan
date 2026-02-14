@@ -10,21 +10,26 @@ dotenv.config()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+// 使用动态路径 - 本地开发用 __dirname，生产环境用绝对路径
+const isProduction = process.env.NODE_ENV === 'production'
+const APP_ROOT = isProduction 
+    ? '/var/www/vpnspan/backend' 
+    : __dirname
+
 const app = express()
 const PORT = process.env.PORT || 5000
 
 // 启动服务器
 app.listen(PORT, () => {
-    console.log(`🚀 VPNSpan API server running on http://localhost:${PORT}`)
-    console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`)
+    console.log(`VPNSpan API running on port ${PORT}`)
 })
 
 // 中间件
 app.use(cors())
 app.use(express.json())
 
-// 数据文件路径
-const DATA_DIR = join(__dirname, 'data')
+// 数据文件路径 - 使用绝对路径
+const DATA_DIR = join(APP_ROOT, 'data')
 const STATUS_FILE = join(DATA_DIR, 'vpn-status.json')
 const HISTORY_DIR = join(DATA_DIR, 'history')
 
@@ -110,32 +115,22 @@ function readVPNStatus() {
 // 读取VPN历史数据
 function readVPNHistory(vpnId) {
     const historyFile = join(HISTORY_DIR, `${vpnId}.json`)
+    console.log('Reading history from:', historyFile)
     try {
         if (fs.existsSync(historyFile)) {
             const data = fs.readFileSync(historyFile, 'utf8')
-            return JSON.parse(data)
+            const history = JSON.parse(data)
+            console.log(`Loaded ${history.length} history records for ${vpnId}`)
+            return history
+        } else {
+            console.log('History file not found:', historyFile)
         }
     } catch (error) {
         console.error(`Error reading history for ${vpnId}: `, error)
     }
 
-    // 生成24小时模拟数据
-    const history = []
-    const baseSpeed = 80 + Math.random() * 30
-    const baseLatency = 20 + Math.random() * 20
-
-    for (let i = 23; i >= 0; i--) {
-        const hour = new Date()
-        hour.setHours(hour.getHours() - i)
-        history.push({
-            time: hour.toISOString(),
-            speed: baseSpeed + Math.random() * 20 - 10,
-            latency: baseLatency + Math.random() * 10 - 5,
-            uptime: 90 + Math.random() * 10
-        })
-    }
-
-    return history
+    // 返回空数组而不是mock数据
+    return []
 }
 
 // API 路由
